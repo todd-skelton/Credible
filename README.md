@@ -135,7 +135,7 @@ public class UserController : ControllerBase
         _user = user ?? throw new ArgumentNullException(nameof(user));
     }
 
-    // GET api/admin
+    // GET api/user
     [HttpGet("")]
     public ActionResult<UserIdentity> Get()
     {
