@@ -3,7 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Credible", "Credible\Credible.csproj", "{822F4AB1-5DA4-4A68-BF3C-FCED1CDC1CCF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A7C94137-868B-4B5A-A436-C63BD0687F78}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{82C50396-3F40-4CFD-8978-DC76601095F7}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD71A609-6A04-4EB8-B25C-817FB75660D0}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		logo.png = logo.png
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Credible", "src\Credible\Credible.csproj", "{B2778DE5-4980-4F32-8F43-AD2DD348B73E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{9B8517AF-7197-4042-887C-1D9A7397B173}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiSample", "samples\WebApiSample\WebApiSample.csproj", "{AEEC66BF-EAD6-4BBD-8383-37E93D59BB62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +34,21 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{822F4AB1-5DA4-4A68-BF3C-FCED1CDC1CCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{822F4AB1-5DA4-4A68-BF3C-FCED1CDC1CCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{822F4AB1-5DA4-4A68-BF3C-FCED1CDC1CCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{822F4AB1-5DA4-4A68-BF3C-FCED1CDC1CCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2778DE5-4980-4F32-8F43-AD2DD348B73E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2778DE5-4980-4F32-8F43-AD2DD348B73E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2778DE5-4980-4F32-8F43-AD2DD348B73E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2778DE5-4980-4F32-8F43-AD2DD348B73E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEEC66BF-EAD6-4BBD-8383-37E93D59BB62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEEC66BF-EAD6-4BBD-8383-37E93D59BB62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEEC66BF-EAD6-4BBD-8383-37E93D59BB62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEEC66BF-EAD6-4BBD-8383-37E93D59BB62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{82C50396-3F40-4CFD-8978-DC76601095F7} = {A7C94137-868B-4B5A-A436-C63BD0687F78}
+		{AEEC66BF-EAD6-4BBD-8383-37E93D59BB62} = {9B8517AF-7197-4042-887C-1D9A7397B173}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A3F6889C-43E3-456D-A4CC-72EFCC7672A6}

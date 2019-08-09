@@ -1,0 +1,20 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.1</Version>
+    <Authors>Todd Skelton</Authors>
+    <Company>Kloc Limited Company</Company>
+    <Product>Credible</Product>
+    <PackageIconUrl>https://github.com/xKloc/Credible/blob/master/logo.png?raw=true</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/xKloc/Credible</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/xKloc/Credible</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>authentication security jwt json web token bearer</PackageTags>
+  </PropertyGroup>
+
+  <Target Name="PushNuGetPackage" AfterTargets="GenerateNuspec" Condition="'$(Configuration)'=='Release'">
+    <Exec Command="C:\Nuget\NuGet.exe push -Source https://api.nuget.org/v3/index.json $(ProjectDir)bin\$(Configuration)\$(AssemblyName).$(Version).nupkg"></Exec>
+  </Target>
+</Project>
