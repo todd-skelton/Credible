@@ -11,8 +11,6 @@ Simple Json Web Token library for .NET
 `dotnet add package Credible`
 
 ## Getting Started
-Using Credible is very simple. 
-
 1. Create an identity model to be used in your application.
 ```csharp
 public class UserIdentity
@@ -101,7 +99,7 @@ public class Startup
 }
 ```
 
-5. Inject your `JsonWebTokenFactor<TIdentity>` into your controller.
+5. Inject your `JsonWebTokenFactor<TIdentity>` into your controller and call the `create` method to create a new token based on the identity model.
 ```csharp
 [Route("api/token")]
 [ApiController]
@@ -123,7 +121,7 @@ public class TokenController : ControllerBase
 }
 ```
 
-6. Inject your identity class into a controller to use it.
+6. Inject your identity class into a controller to use it to get the current user.
 ```csharp
 [Route("api/user")]
 [ApiController]
