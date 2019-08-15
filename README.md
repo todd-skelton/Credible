@@ -99,7 +99,7 @@ public class Startup
 }
 ```
 
-5. Inject your `JsonWebTokenFactor<TIdentity>` into your controller and call the `create` method to create a new token based on the identity model.
+5. Inject your `JsonWebTokenFactory<TIdentity>` into your controller and call the `create` method to create a new token based on the identity model.
 ```csharp
 [Route("api/token")]
 [ApiController]
@@ -132,7 +132,7 @@ public class UserController : ControllerBase
 
     public UserController(UserIdentity user)
     {
-        _user = user ?? throw new ArgumentNullException(nameof(user));
+        _user = user;
     }
 
     // GET api/user
