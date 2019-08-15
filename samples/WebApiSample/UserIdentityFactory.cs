@@ -13,7 +13,7 @@ namespace WebApiSample
             {
                 UserId = int.Parse(principal.FindFirst("userId")?.Value ?? "0"),
                 Username = principal.FindFirst("username")?.Value ?? "",
-                Permissions = principal.FindAll("permission").Select(e => e.Value)
+                Permissions = principal.FindAll("permissions").Select(e => e.Value)
             };
         }
     }

@@ -27,7 +27,7 @@ namespace WebApiSample
             var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("My super secret key."));
 
             services.AddAuthentication("Bearer")
-                .AddJwtBearer<UserIdentity, UserIdentityFactory, ClaimsFactory>("Bearer",
+                .AddCredible<UserIdentity, UserIdentityFactory, PayloadFactory>("Bearer",
                     issueOptions =>
                     {
                         issueOptions.Audience = "WebApiSample";

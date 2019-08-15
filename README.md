@@ -20,16 +20,17 @@ public class UserIdentity
     public IEnumerable<string> Permissions { get; set; }
 }
 ```
-2. Create a claims factory to convert your identity model into a token.
+2. Create a payload factory to convert your identity model into a token.
 ```csharp
-public class ClaimsFactory : IClaimsFactory<UserIdentity>
+public class PayloadFactory : IPayloadFactory<UserIdentity>
 {
-    public IEnumerable<Claim> Create(UserIdentity identity)
+    public IDictionary<string, object> Create(UserIdentity identity)
     {
-        return new List<Claim>(identity.Permissions.Select(e => new Claim("permission", e)))
+        return new Dictionary<string, object>
         {
-            new Claim("userId", identity.UserId.ToString()),
-            new Claim("username",  identity.Username)
+            { "userId", identity.UserId },
+            { "username", identity.Username },
+            { "permissions", identity.Permissions }
         };
     }
 }
@@ -45,7 +46,7 @@ public class UserIdentityFactory : IIdentityFactory<UserIdentity>
         {
             UserId = int.Parse(principal.FindFirst("userId")?.Value ?? "0"),
             Username = principal.FindFirst("username")?.Value ?? "",
-            Permissions = principal.FindAll("permission").Select(e => e.Value)
+            Permissions = principal.FindAll("permissions").Select(e => e.Value)
         };
     }
 }
@@ -62,7 +63,7 @@ public class Startup
         var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("My super secret key."));
 
         services.AddAuthentication("Bearer")
-            .AddJwtBearer<UserIdentity, UserIdentityFactory, ClaimsFactory>("Bearer",
+            .AddCredible<UserIdentity, UserIdentityFactory, PayloadFactory>("Bearer",
                 issueOptions =>
                 {
                     issueOptions.Audience = "WebApiSample";
@@ -88,7 +89,6 @@ public class Startup
         //...
     }
 
-    //...
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
         //...
@@ -132,7 +132,7 @@ public class UserController : ControllerBase
 
     public UserController(UserIdentity user)
     {
-        _user = user ?? throw new ArgumentNullException(nameof(user));
+        _user = user;
     }
 
     // GET api/user

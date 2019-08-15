@@ -16,54 +16,54 @@ namespace Credible
         /// </summary>
         /// <typeparam name="TIdentity">The type of identity model.</typeparam>
         /// <typeparam name="TIdentityFactory">The type of identity factory.</typeparam>
-        /// <typeparam name="TClaimsFactory">The type of claims factory.</typeparam>
+        /// <typeparam name="TPayloadFactory">The type of payload factory.</typeparam>
         /// <param name="builder">The authentication builder.</param>
         /// <param name="configureIssueOptions">Options to configure the token factory.</param>
         /// <param name="configureValidationOptions">Options to configure the authentication handlers.</param>
-        public static AuthenticationBuilder AddJwtBearer<TIdentity, TIdentityFactory, TClaimsFactory>(this AuthenticationBuilder builder, Action<JsonWebTokenFactoryOptions> configureIssueOptions, Action<JwtBearerOptions> configureValidationOptions)
+        public static AuthenticationBuilder AddCredible<TIdentity, TIdentityFactory, TPayloadFactory>(this AuthenticationBuilder builder, Action<JsonWebTokenFactoryOptions> configureIssueOptions, Action<JwtBearerOptions> configureValidationOptions)
             where TIdentity : class
             where TIdentityFactory : class, IIdentityFactory<TIdentity>
-            where TClaimsFactory : class, IClaimsFactory<TIdentity>
-            => builder.AddJwtBearer<TIdentity, TIdentityFactory, TClaimsFactory>(JwtBearerDefaults.AuthenticationScheme, configureIssueOptions, configureValidationOptions);
+            where TPayloadFactory : class, IPayloadFactory<TIdentity>
+            => builder.AddCredible<TIdentity, TIdentityFactory, TPayloadFactory>(JwtBearerDefaults.AuthenticationScheme, configureIssueOptions, configureValidationOptions);
 
         /// <summary>
         /// Adds Json Web Token Bearer authentication with a token factory for issuing tokens
         /// </summary>
         /// <typeparam name="TIdentity">The type of identity model.</typeparam>
         /// <typeparam name="TIdentityFactory">The type of identity factory.</typeparam>
-        /// <typeparam name="TClaimsFactory">The type of claims factory.</typeparam>
+        /// <typeparam name="TPayloadFactory">The type of payload factory.</typeparam>
         /// <param name="builder">The authentication builder.</param>
         /// <param name="authenticationScheme">The authentication scheme.</param>
         /// <param name="configureIssuingOptions">Options to configure the token factory.</param>
         /// <param name="configureValidationOptions">Options to configure the authentication handlers.</param>
-        public static AuthenticationBuilder AddJwtBearer<TIdentity, TIdentityFactory, TClaimsFactory>(this AuthenticationBuilder builder, string authenticationScheme, Action<JsonWebTokenFactoryOptions> configureIssuingOptions, Action<JwtBearerOptions> configureValidationOptions)
+        public static AuthenticationBuilder AddCredible<TIdentity, TIdentityFactory, TPayloadFactory>(this AuthenticationBuilder builder, string authenticationScheme, Action<JsonWebTokenFactoryOptions> configureIssuingOptions, Action<JwtBearerOptions> configureValidationOptions)
             where TIdentity : class
             where TIdentityFactory : class, IIdentityFactory<TIdentity>
-            where TClaimsFactory : class, IClaimsFactory<TIdentity>
-            => builder.AddJwtBearer<TIdentity, TIdentityFactory, TClaimsFactory>(authenticationScheme, null, configureIssuingOptions, configureValidationOptions);
+            where TPayloadFactory : class, IPayloadFactory<TIdentity>
+            => builder.AddCredible<TIdentity, TIdentityFactory, TPayloadFactory>(authenticationScheme, null, configureIssuingOptions, configureValidationOptions);
 
         /// <summary>
         /// Adds Json Web Token Bearer authentication with a token factory for issuing tokens
         /// </summary>
         /// <typeparam name="TIdentity">The type of identity model.</typeparam>
         /// <typeparam name="TIdentityFactory">The type of identity factory.</typeparam>
-        /// <typeparam name="TClaimsFactory">The type of claims factory.</typeparam>
+        /// <typeparam name="TPayloadFactory">The type of payload factory.</typeparam>
         /// <param name="builder">The authentication builder.</param>
         /// <param name="authenticationScheme">The authentication scheme.</param>
         /// <param name="displayName">The display name of the authentication scheme.</param>
         /// <param name="configureIssuingOptions">Options to configure the token factory.</param>
         /// <param name="configureValidationOptions">Options to configure the authentication handlers.</param>
         /// <returns></returns>
-        public static AuthenticationBuilder AddJwtBearer<TIdentity, TIdentityFactory, TClaimsFactory>(this AuthenticationBuilder builder, string authenticationScheme, string displayName, Action<JsonWebTokenFactoryOptions> configureIssuingOptions, Action<JwtBearerOptions> configureValidationOptions)
+        public static AuthenticationBuilder AddCredible<TIdentity, TIdentityFactory, TPayloadFactory>(this AuthenticationBuilder builder, string authenticationScheme, string displayName, Action<JsonWebTokenFactoryOptions> configureIssuingOptions, Action<JwtBearerOptions> configureValidationOptions)
             where TIdentity : class
             where TIdentityFactory : class, IIdentityFactory<TIdentity>
-            where TClaimsFactory : class, IClaimsFactory<TIdentity>
+            where TPayloadFactory : class, IPayloadFactory<TIdentity>
         {
 
             builder.Services.Configure(configureIssuingOptions);
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddTransient<IIdentityFactory<TIdentity>, TIdentityFactory>();
-            builder.Services.AddTransient<IClaimsFactory<TIdentity>, TClaimsFactory>();
+            builder.Services.AddTransient<IPayloadFactory<TIdentity>, TPayloadFactory>();
             builder.Services.AddTransient<JsonWebTokenFactory<TIdentity>>();
             builder.Services.AddTransient(provider =>
             {
