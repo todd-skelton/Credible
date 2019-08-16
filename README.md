@@ -145,9 +145,10 @@ public class UserController : ControllerBase
 ```
 
 ### Separate Issuing and Validation
-If you want to separate issue and validation, you can use the overrides without the corresponding factory you aren't using.
+If you want to separate issue and validation, you can configure them separately.
 
 #### Validation Only
+Validation requires the authentication middleware, so be sure to add `app.UseAuthentication();` like the example above.
 ```csharp
 services.AddAuthentication("Bearer")
     .AddCredible<UserIdentity, UserIdentityFactory>("Bearer",
@@ -169,15 +170,15 @@ services.AddAuthentication("Bearer")
 ```
 
 ### Issuing Only
+Issuing doesn't require the authentication middleware or the `AuthenticationBuilder` to be used. Just call `AddCredible` on the `IServiceCollection` directly.
 ```csharp
-services.AddAuthentication("Bearer")
-    .AddCredible<UserIdentity, PayloadFactory>("Bearer",
-        issuingOptions =>
-        {
-            issuingOptions.Audience = "WebApiSample";
-            issuingOptions.Issuer = "WebApiSample";
-            issuingOptions.Expiration = TimeSpan.FromMinutes(30);
-            issuingOptions.SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-        }
-    );
+services.AddCredible<UserIdentity, PayloadFactory>(
+    issueOptions =>
+    {
+        issueOptions.Audience = "WebApiSample";
+        issueOptions.Issuer = "WebApiSample";
+        issueOptions.Expiration = TimeSpan.FromMinutes(30);
+        issueOptions.SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+    }
+);
 ```
