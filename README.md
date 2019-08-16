@@ -169,7 +169,7 @@ services.AddAuthentication("Bearer")
     );
 ```
 
-## Issuing Only
+### Issuing Only
 Issuing doesn't require the authentication middleware or the `AuthenticationBuilder` to be used. Just call `AddCredible` on the `IServiceCollection` directly.
 ```csharp
 services.AddCredible<UserIdentity, PayloadFactory>(
