@@ -144,10 +144,10 @@ public class UserController : ControllerBase
 }
 ```
 
-### Separate Issuing and Validation
+## Separate Issuing and Validation
 If you want to separate issue and validation, you can configure them separately.
 
-#### Validation Only
+### Validation Only
 Validation requires the authentication middleware, so be sure to add `app.UseAuthentication();` like the example above.
 ```csharp
 services.AddAuthentication("Bearer")
@@ -169,7 +169,7 @@ services.AddAuthentication("Bearer")
     );
 ```
 
-### Issuing Only
+## Issuing Only
 Issuing doesn't require the authentication middleware or the `AuthenticationBuilder` to be used. Just call `AddCredible` on the `IServiceCollection` directly.
 ```csharp
 services.AddCredible<UserIdentity, PayloadFactory>(
