@@ -28,12 +28,12 @@ namespace WebApiSample
 
             services.AddAuthentication("Bearer")
                 .AddCredible<UserIdentity, UserIdentityFactory, PayloadFactory>("Bearer",
-                    issueOptions =>
+                    issuingOptions =>
                     {
-                        issueOptions.Audience = "WebApiSample";
-                        issueOptions.Issuer = "WebApiSample";
-                        issueOptions.Expiration = TimeSpan.FromMinutes(30);
-                        issueOptions.SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+                        issuingOptions.Audience = "WebApiSample";
+                        issuingOptions.Issuer = "WebApiSample";
+                        issuingOptions.Expiration = TimeSpan.FromMinutes(30);
+                        issuingOptions.SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
                     },
                     validationOptions =>
                     {

@@ -64,12 +64,12 @@ public class Startup
 
         services.AddAuthentication("Bearer")
             .AddCredible<UserIdentity, UserIdentityFactory, PayloadFactory>("Bearer",
-                issueOptions =>
+                issuingOptions =>
                 {
-                    issueOptions.Audience = "WebApiSample";
-                    issueOptions.Issuer = "WebApiSample";
-                    issueOptions.Expiration = TimeSpan.FromMinutes(30);
-                    issueOptions.SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+                    issuingOptions.Audience = "WebApiSample";
+                    issuingOptions.Issuer = "WebApiSample";
+                    issuingOptions.Expiration = TimeSpan.FromMinutes(30);
+                    issuingOptions.SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
                 },
                 validationOptions =>
                 {
@@ -142,4 +142,42 @@ public class UserController : ControllerBase
         return _user;
     }
 }
+```
+
+### Separate Issuing and Validation
+If you want to separate issue and validation, you can use the overrides without the corresponding factory you aren't using.
+
+#### Validation Only
+```csharp
+services.AddAuthentication("Bearer")
+    .AddCredible<UserIdentity, UserIdentityFactory>("Bearer",
+        validationOptions =>
+        {
+            validationOptions.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = securityKey,
+                ValidIssuer = "WebApiSample",
+                ValidAudience = "WebApiSample",
+                NameClaimType = "username"
+            };
+            validationOptions.Audience = "WebApiSample";
+            validationOptions.ClaimsIssuer = "WebApiSample";
+            validationOptions.Challenge = "Bearer";
+        }
+    );
+```
+
+### Issuing Only
+```csharp
+services.AddAuthentication("Bearer")
+    .AddCredible<UserIdentity, PayloadFactory>("Bearer",
+        issuingOptions =>
+        {
+            issuingOptions.Audience = "WebApiSample";
+            issuingOptions.Issuer = "WebApiSample";
+            issuingOptions.Expiration = TimeSpan.FromMinutes(30);
+            issuingOptions.SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+        }
+    );
 ```
