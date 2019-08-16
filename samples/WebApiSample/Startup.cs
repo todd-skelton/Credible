@@ -26,30 +26,29 @@ namespace WebApiSample
 
             var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("My super secret key."));
 
-            services.AddAuthentication("Bearer")
-                .AddCredible<UserIdentity, UserIdentityFactory, PayloadFactory>("Bearer",
-                    issuingOptions =>
+            services.AddCredible<UserIdentity, UserIdentityFactory, PayloadFactory>(
+                issuingOptions =>
+                {
+                    issuingOptions.Audience = "WebApiSample";
+                    issuingOptions.Issuer = "WebApiSample";
+                    issuingOptions.Expiration = TimeSpan.FromMinutes(30);
+                    issuingOptions.SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+                },
+                validationOptions =>
+                {
+                    validationOptions.TokenValidationParameters = new TokenValidationParameters
                     {
-                        issuingOptions.Audience = "WebApiSample";
-                        issuingOptions.Issuer = "WebApiSample";
-                        issuingOptions.Expiration = TimeSpan.FromMinutes(30);
-                        issuingOptions.SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-                    },
-                    validationOptions =>
-                    {
-                        validationOptions.TokenValidationParameters = new TokenValidationParameters
-                        {
-                            ValidateIssuerSigningKey = true,
-                            IssuerSigningKey = securityKey,
-                            ValidIssuer = "WebApiSample",
-                            ValidAudience = "WebApiSample",
-                            NameClaimType = "username"
-                        };
-                        validationOptions.Audience = "WebApiSample";
-                        validationOptions.ClaimsIssuer = "WebApiSample";
-                        validationOptions.Challenge = "Bearer";
-                    }
-                );
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = securityKey,
+                        ValidIssuer = "WebApiSample",
+                        ValidAudience = "WebApiSample",
+                        NameClaimType = "username"
+                    };
+                    validationOptions.Audience = "WebApiSample";
+                    validationOptions.ClaimsIssuer = "WebApiSample";
+                    validationOptions.Challenge = "Bearer";
+                }
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
